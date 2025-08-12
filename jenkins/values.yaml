@@ -1,9 +1,17 @@
-controller:
-  adminUser: admin
-  adminPassword: admin123
-  serviceType: LoadBalancer
-  installPlugins:
-    - kubernetes
-    - workflow-aggregator
-    - git
-    - configuration-as-code
+spec:
+  source:
+    repoURL: https://charts.jenkins.io
+    chart: jenkins
+    targetRevision: 5.8.73
+    helm:
+      values: |
+        controller:
+          admin:
+            username: admin
+            password: admin123
+          serviceType: LoadBalancer
+          installPlugins:
+            - kubernetes
+            - workflow-aggregator
+            - git
+            - configuration-as-code
