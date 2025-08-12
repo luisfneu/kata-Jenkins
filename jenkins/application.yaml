@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: jenkins
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://charts.jenkins.io'
+    chart: jenkins
+    targetRevision: 5.0.22 # verifique a versão mais recente!
+    helm:
+      values: |
+        controller:
+          adminUser: admin
+          adminPassword: admin123
+          serviceType: LoadBalancer
+          installPlugins:
+            - kubernetes
+            - workflow-aggregator
+            - git
+            - configuration-as-code
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: jenkins
+  syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true

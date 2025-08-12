@@ -1,0 +1,9 @@
+controller:
+  adminUser: admin
+  adminPassword: admin123
+  serviceType: LoadBalancer
+  installPlugins:
+    - kubernetes
+    - workflow-aggregator
+    - git
+    - configuration-as-code
