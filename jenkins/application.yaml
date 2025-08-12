@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: 'https://charts.jenkins.io'
     chart: jenkins
-    targetRevision: 5.0.22 # verifique a versão mais recente!
+    targetRevision: 5.8.73
     helm:
       values: |
         controller:
