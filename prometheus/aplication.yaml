@@ -1,0 +1,50 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kube-prometheus-stack
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://prometheus-community.github.io/helm-charts
+    chart: kube-prometheus-stack
+    targetRevision: 66.2.1
+    helm:
+      values: |
+        fullnameOverride: monitoring
+        grafana:
+          adminPassword: admin123
+          service:
+            type: LoadBalancer
+          # Habilite dashboards e datasources extras se quiser
+          defaultDashboardsTimezone: browser
+        prometheus:
+          service:
+            type: LoadBalancer
+          prometheusSpec:
+            retention: 15d
+            scrapeInterval: 30s
+            evaluationInterval: 30s
+            # Exemplo de storage (ajuste o storageClassName ao seu cluster)
+            storageSpec:
+              volumeClaimTemplate:
+                spec:
+                  storageClassName: standard
+                  accessModes: ["ReadWriteOnce"]
+                  resources:
+                    requests:
+                      storage: 20Gi
+        alertmanager:
+          service:
+            type: ClusterIP
+          alertmanagerSpec:
+            replicas: 1
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
