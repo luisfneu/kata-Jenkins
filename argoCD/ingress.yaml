@@ -1,0 +1,12 @@
+server:
+  service:
+    type: ClusterIP
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    hosts:
+      - argocd.seudominio.com
+    tls:
+      - hosts:
+          - argocd.seudominio.com
+        secretName: argocd-tls
