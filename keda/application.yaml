@@ -8,7 +8,6 @@ spec:
   source:
     repoURL: https://kedacore.github.io/charts
     chart: keda
-    # Use uma faixa de versões estável de 2.x (ajuste se preferir fixar uma versão específica)
     targetRevision: ">=2.13.0 <3.0.0"
     helm:
       values: |
